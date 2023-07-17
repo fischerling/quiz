@@ -149,7 +149,7 @@ def load_solutions(question_dirs: list[Path],
 
 def show_question(question: Path):
     """show the question in an external programm and return the process"""
-    if platform.system() != 'Windows':
+    if platform.system() == 'Windows':
         os.startfile(question)  # type: ignore # pylint: disable=no-member
         return
 
