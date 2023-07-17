@@ -17,12 +17,13 @@ The solutions file must provide the fields `question,solution`.
 usage: quiz.py [-h] [-s SOLUTION_FILE] [--select SELECT] [question_dir ...]
 
 positional arguments:
-  question_dir
+  question_dir          directories containing questions
 
 options:
   -h, --help            show this help message and exit
   -s SOLUTION_FILE, --solution-file SOLUTION_FILE
-  --select SELECT
+                        file containing the solutions
+  --select SELECT       selector string to identify a subset of solutions
 ```
 
 By default quiz.py considers the current working directory the question directory and treats all present files as questions.
