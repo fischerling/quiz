@@ -1,0 +1,3 @@
+-i https://pypi.org/simple
+psutil==5.9.5
+pysimplegui==4.60.5
