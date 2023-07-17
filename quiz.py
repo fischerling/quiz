@@ -17,6 +17,7 @@ import csv
 from pathlib import Path
 import random
 import platform
+import os
 import tomllib
 import subprocess
 import sys
@@ -28,11 +29,11 @@ WRONG_SOUND = Path(__file__).parent / 'Wrong.mp3'
 CORRECT_SOUND = Path(__file__).parent / 'Correct.mp3'
 
 if platform.system() != 'Windows':
-    SHOW_QUESTION_CMD = 'xdg-open'
     PLAY_SOUND_CMD = 'mpv'
 else:
-    SHOW_QUESTION_CMD = 'start'
     PLAY_SOUND_CMD = 'vlc.exe --intf=dummy --dummy-quiet'
+
+SHOW_QUESTION_CMD = 'xdg-open'
 
 
 def err(msg: str, status=1):
@@ -146,10 +147,14 @@ def load_solutions(question_dirs: list[Path],
     return solutions
 
 
-def show_question(question: Path) -> subprocess.Popen:
+def show_question(question: Path):
     """show the question in an external programm and return the process"""
+    if platform.system() != 'Windows':
+        os.startfile(question)  # type: ignore # pylint: disable=no-member
+        return
+
     cmd = SHOW_QUESTION_CMD.split() + [str(question)]
-    return subprocess.Popen(cmd, shell=True)
+    subprocess.Popen(cmd)
 
 
 def color_button(layout, text: str, color: str):
