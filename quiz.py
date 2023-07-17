@@ -27,7 +27,7 @@ import psutil
 WRONG_SOUND = Path(__file__).parent / 'Wrong.mp3'
 CORRECT_SOUND = Path(__file__).parent / 'Correct.mp3'
 
-if platform.system() != 'windows':
+if platform.system() != 'Windows':
     SHOW_QUESTION_CMD = 'xdg-open'
     PLAY_SOUND_CMD = 'mpv'
 else:
