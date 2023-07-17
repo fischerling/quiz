@@ -43,7 +43,8 @@ def err(msg: str, status=1):
 
 def play_sound(sound: Path):
     """Play a sound file"""
-    subprocess.run(f'{PLAY_SOUND_CMD} "{sound}"'.split(),
+    cmd = PLAY_SOUND_CMD.split() + [str(sound)]
+    subprocess.run(cmd,
                    check=True,
                    stderr=subprocess.DEVNULL,
                    stdout=subprocess.DEVNULL)
@@ -147,7 +148,7 @@ def load_solutions(question_dirs: list[Path],
 
 def show_question(question: Path) -> subprocess.Popen:
     """show the question in an external programm and return the process"""
-    cmd = f'{SHOW_QUESTION_CMD} "{question}"'.split()
+    cmd = SHOW_QUESTION_CMD.split() + [str(question)]
     return subprocess.Popen(cmd, shell=True)
 
 
