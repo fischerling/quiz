@@ -16,6 +16,7 @@ import argparse
 import csv
 from pathlib import Path
 import random
+import platform
 import tomllib
 import subprocess
 import sys
@@ -26,8 +27,12 @@ import psutil
 WRONG_SOUND = Path(__file__).parent / 'Wrong.mp3'
 CORRECT_SOUND = Path(__file__).parent / 'Correct.mp3'
 
-SHOW_QUESTION_CMD = 'xdg-open'
-PLAY_SOUND_CMD = 'mpv'
+if platform.system() != 'windows':
+    SHOW_QUESTION_CMD = 'xdg-open'
+    PLAY_SOUND_CMD = 'mpv'
+else:
+    SHOW_QUESTION_CMD = 'cmd.exe /c start'
+    PLAY_SOUND_CMD = 'vlc.exe --intf=dummy --dummy-quiet'
 
 
 def err(msg: str, status=1):
