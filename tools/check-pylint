@@ -1,0 +1,22 @@
+#!/bin/bash
+
+PYLINT_EXIT=${1}
+
+# pylint error masks
+FATAL_MASK=1
+ERROR_MASK=2 
+WARNING_MASK=4
+REFACTOR_MASK=8
+CONVENTION_MASK=16
+USAGE_ERROR_MASK=32
+
+# fail on fatal
+[[ $(( $PYLINT_EXIT & $FATAL_MASK )) -gt 0 ]] && exit $PYLINT_EXIT
+
+# fail on error
+[[ $(( $PYLINT_EXIT & $ERROR_MASK )) -gt 0 ]] && exit $PYLINT_EXIT
+
+# fail on warning
+[[ $(( $PYLINT_EXIT & $WARNING_MASK )) -gt 0 ]] && exit $PYLINT_EXIT
+
+exit 0
