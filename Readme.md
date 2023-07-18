@@ -30,7 +30,12 @@ By default quiz.py considers the current working directory the question director
 
 ## Requirements
 
+* python >= 3.11
 * PySimpleGUI
+* playsound
+* psutil
+
+The requirements can be installed in virtual environment using [`pipenv`](https://pipenv.pypa.io/) or using the `requirements.txt` file
 
 ## License
 
