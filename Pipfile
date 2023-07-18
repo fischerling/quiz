@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 pysimplegui = "*"
 psutil = "*"
+playsound = "*"
 
 [dev-packages]
 yapf = "*"

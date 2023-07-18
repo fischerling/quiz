@@ -24,14 +24,10 @@ import sys
 
 import PySimpleGUI as sg
 import psutil
+import playsound
 
 WRONG_SOUND = Path(__file__).parent / 'Wrong.mp3'
 CORRECT_SOUND = Path(__file__).parent / 'Correct.mp3'
-
-if platform.system() != 'Windows':
-    PLAY_SOUND_CMD = 'mpv'
-else:
-    PLAY_SOUND_CMD = 'vlc.exe --intf=dummy --dummy-quiet'
 
 SHOW_QUESTION_CMD = 'xdg-open'
 
@@ -40,15 +36,6 @@ def err(msg: str, status=1):
     """Print the error message to stderr and exit with status"""
     print(msg)
     sys.exit(status)
-
-
-def play_sound(sound: Path):
-    """Play a sound file"""
-    cmd = PLAY_SOUND_CMD.split() + [str(sound)]
-    subprocess.run(cmd,
-                   check=True,
-                   stderr=subprocess.DEVNULL,
-                   stdout=subprocess.DEVNULL)
 
 
 def terminate_subprocesses():
@@ -186,10 +173,10 @@ def prompt_solution(solution: str, prompts=None):
             break
 
         color_button(layout[0], event, '#FF0000')
-        play_sound(WRONG_SOUND)
+        playsound.playsound(WRONG_SOUND)
 
     color_button(layout[0], event, '#00FF00')
-    play_sound(CORRECT_SOUND)
+    playsound.playsound(CORRECT_SOUND)
 
     window.read()
     window.close()
