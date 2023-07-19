@@ -12,7 +12,7 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Package Single-Folder Application
-      uses: fischerling/pyinstaller-action-windows@ace7c5f50489e38dbfb6651229207bba6e049ab4
+      uses: fischerling/pyinstaller-action-windows@old-devel
       with:
         path: .
 
