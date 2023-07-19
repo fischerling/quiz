@@ -31,6 +31,8 @@ CORRECT_SOUND = Path(__file__).parent / 'Correct.mp3'
 
 SHOW_QUESTION_CMD = 'xdg-open'
 
+sg.SetOptions(window_location=(0, -200))
+
 
 def err(msg: str, status=1):
     """Print the error message to stderr and exit with status"""
