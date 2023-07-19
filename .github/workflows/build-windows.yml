@@ -2,7 +2,7 @@ name: Build and package for windows
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "CI-devel" ]
 
 jobs:
   build:
@@ -11,8 +11,13 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Package Application
-      uses: fischerling/pyinstaller-action-windows@main
+    - name: Package Single-Folder Application
+      uses: fischerling/pyinstaller-action-windows@devel
+      with:
+        path: .
+
+    - name: Package Single-File Application
+      uses: fischerling/pyinstaller-action-windows@devel
       with:
         path: .
         single_file: True
