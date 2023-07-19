@@ -13,9 +13,9 @@ jobs:
 
     - name: Package Application
       uses: fischerling/pyinstaller-action-windows@main
-
       with:
         path: .
+        single_file: True
 
     - uses: actions/upload-artifact@v3
       with:
