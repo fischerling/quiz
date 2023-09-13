@@ -14,6 +14,7 @@
 
 import argparse
 import csv
+import fnmatch
 from pathlib import Path
 import random
 import platform
@@ -50,8 +51,8 @@ def terminate_subprocesses():
         proc.kill()
 
 
-def possible_questions(question_dirs: list[Path]) -> list[Path]:
-    """return all file in the question directories"""
+def possible_questions(question_dirs: list[Path], match='*') -> list[Path]:
+    """return all files in the question directories"""
     questions = []
     ignored_file_names = [Path(__file__).name, 'solutions']
     for question_dir in question_dirs:
@@ -60,7 +61,7 @@ def possible_questions(question_dirs: list[Path]) -> list[Path]:
 
         questions.extend([
             p for p in question_dir.iterdir() if p.is_file()
-            if p.name not in ignored_file_names
+            if p.name not in ignored_file_names and fnmatch.fnmatch(p, match)
         ])
 
     return questions
@@ -196,10 +197,13 @@ def main():
                         help='file containing the solutions')
     parser.add_argument(
         '--select', help='selector string to identify a subset of solutions')
+    parser.add_argument('--question-match',
+                        help='match question files names',
+                        default='*')
     args = parser.parse_args()
 
     question_dirs = [Path(p) for p in args.question_dir or ['.']]
-    questions = possible_questions(question_dirs)
+    questions = possible_questions(question_dirs, match=args.question_match)
 
     solution_files = []
     if args.solution_file:
