@@ -200,6 +200,9 @@ def main():
     parser.add_argument('--question-match',
                         help='match question files names',
                         default='*')
+    parser.add_argument('--answers',
+                        help='match question files names',
+                        nargs='*')
     args = parser.parse_args()
 
     question_dirs = [Path(p) for p in args.question_dir or ['.']]
@@ -220,7 +223,7 @@ def main():
         print(f'{next_question}: {solution}', end='')
 
         show_question(next_question)
-        prompt_solution(solution)
+        prompt_solution(solution, prompts=args.answers)
         terminate_subprocesses()
 
         solved.append(next_question)
