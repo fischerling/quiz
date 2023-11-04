@@ -1,0 +1,24 @@
+image: "muhq/python-dev:3.11.0"
+
+before_script:
+  - python --version
+  - pipenv install --dev
+
+stages:
+  - Static Analysis
+  - Test
+
+pylint:
+  stage: Static Analysis
+  script:
+    - pipenv run make check-pylint
+
+format:
+  stage: Static Analysis
+  script:
+    - pipenv run make check-format
+
+mypy:
+  stage: Static Analysis
+  script:
+    - pipenv run make check-mypy
