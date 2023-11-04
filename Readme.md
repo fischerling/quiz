@@ -14,7 +14,9 @@ The solutions file must provide the fields `question,solution`.
 ## Usage
 
 ```
-usage: quiz.py [-h] [-s SOLUTION_FILE] [--select SELECT] [question_dir ...]
+usage: quiz.py [-h] [-s SOLUTION_FILE] [--select SELECT] [--question-match QUESTION_MATCH]
+               [--answers [ANSWERS ...]]
+               [question_dir ...]
 
 positional arguments:
   question_dir          directories containing questions
@@ -24,6 +26,10 @@ options:
   -s SOLUTION_FILE, --solution-file SOLUTION_FILE
                         file containing the solutions
   --select SELECT       selector string to identify a subset of solutions
+  --question-match QUESTION_MATCH
+                        match question files names
+  --answers [ANSWERS ...]
+                        match question files names
 ```
 
 By default quiz.py considers the current working directory the question directory and treats all present files as questions.
