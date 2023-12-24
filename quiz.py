@@ -67,6 +67,16 @@ def possible_questions(question_dirs: list[Path], match='*') -> list[Path]:
     return questions
 
 
+def exclude_questions(questions: list[Path],
+                      excludes_file_path: str) -> list[Path]:
+    """exclude all paths in excludes_file from the questions"""
+
+    with open(excludes_file_path, 'r', encoding='utf-8') as excludes_file:
+        excludes = [l[:-1] for l in excludes_file.readlines()]
+
+    return [q for q in questions if q.name not in excludes]
+
+
 def read_solutions_from_toml(solution_path: Path,
                              selector='') -> dict[str, str]:
     """return solutions from a toml solutions file
@@ -195,6 +205,9 @@ def main():
     parser.add_argument('-s',
                         '--solution-file',
                         help='file containing the solutions')
+    parser.add_argument('-x',
+                        '--excludes-file',
+                        help='file containing the questions to exclude')
     parser.add_argument(
         '--select', help='selector string to identify a subset of solutions')
     parser.add_argument('--question-match',
@@ -207,6 +220,9 @@ def main():
 
     question_dirs = [Path(p) for p in args.question_dir or ['.']]
     questions = possible_questions(question_dirs, match=args.question_match)
+
+    if args.excludes_file:
+        questions = exclude_questions(questions, args.excludes_file)
 
     solution_files = []
     if args.solution_file:
