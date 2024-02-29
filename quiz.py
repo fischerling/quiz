@@ -216,6 +216,10 @@ def main():
     parser.add_argument('--answers',
                         help='match question files names',
                         nargs='*')
+    parser.add_argument('-nr',
+                        '--no-random',
+                        help='Do not randomize questions',
+                        action='store_true')
     args = parser.parse_args()
 
     question_dirs = [Path(p) for p in args.question_dir or ['.']]
@@ -234,7 +238,10 @@ def main():
 
     solved = []
     while questions:
-        next_question = random.choice(questions)
+        if args.no_random:
+            next_question = questions[0]
+        else:
+            next_question = random.choice(questions)
         solution = solutions[f'{next_question.parent / next_question.stem}']
         print(f'{next_question}: {solution}', end='')
 
