@@ -227,6 +227,8 @@ def main():
 
     if args.excludes_file:
         questions = exclude_questions(questions, args.excludes_file)
+    if args.no_random:
+        questions.sort()
 
     solution_files = []
     if args.solution_file:
