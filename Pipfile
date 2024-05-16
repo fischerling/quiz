@@ -4,9 +4,9 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pysimplegui = "*"
+pysimplegui = "4.59.0"
 psutil = "*"
-playsound = "*"
+#play_sounds = "*"
 
 [dev-packages]
 yapf = "*"
@@ -15,4 +15,4 @@ pylint = "*"
 pyinstaller = "*"
 
 [requires]
-python_version = "3.11"
+python_version = "3.12"

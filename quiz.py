@@ -22,10 +22,17 @@ import os
 import tomllib
 import subprocess
 import sys
+import importlib
+
 
 import PySimpleGUI as sg
 import psutil
-import playsound
+
+playsound = None
+try:
+    playsound = importlib.import_module('playsound')
+except ModuleNotFoundError:
+    pass
 
 WRONG_SOUND = Path(__file__).parent / 'Wrong.mp3'
 CORRECT_SOUND = Path(__file__).parent / 'Correct.mp3'
@@ -186,10 +193,12 @@ def prompt_solution(solution: str, prompts=None):
             break
 
         color_button(layout[0], event, '#FF0000')
-        playsound.playsound(WRONG_SOUND)
+        if playsound:
+            playsound.playsound(WRONG_SOUND)
 
     color_button(layout[0], event, '#00FF00')
-    playsound.playsound(CORRECT_SOUND)
+    if playsound:
+        playsound.playsound(CORRECT_SOUND)
 
     window.read()
     window.close()
