@@ -27,11 +27,7 @@ import importlib
 import PySimpleGUI as sg
 import psutil
 
-playsound = None
-try:
-    playsound = importlib.import_module('playsound')
-except ModuleNotFoundError:
-    pass
+from playsound3 import playsound
 
 WRONG_SOUND = Path(__file__).parent / 'Wrong.mp3'
 CORRECT_SOUND = Path(__file__).parent / 'Correct.mp3'
@@ -192,12 +188,10 @@ def prompt_solution(solution: str, prompts=None):
             break
 
         color_button(layout[0], event, '#FF0000')
-        if playsound:
-            playsound.playsound(WRONG_SOUND)
+        playsound(str(WRONG_SOUND))
 
     color_button(layout[0], event, '#00FF00')
-    if playsound:
-        playsound.playsound(CORRECT_SOUND)
+    playsound(str(CORRECT_SOUND))
 
     window.read()
     window.close()
