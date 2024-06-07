@@ -22,7 +22,6 @@ import os
 import tomllib
 import subprocess
 import sys
-import importlib
 
 import PySimpleGUI as sg
 import psutil
