@@ -73,7 +73,7 @@ def exclude_questions(questions: list[Path],
     """exclude all paths in excludes_file from the questions"""
 
     with open(excludes_file_path, 'r', encoding='utf-8') as excludes_file:
-        excludes = [l[:-1] for l in excludes_file.readlines()]
+        excludes = [line[:-1] for line in excludes_file.readlines()]
 
     return [q for q in questions if q.name not in excludes]
 
@@ -115,7 +115,7 @@ def load_solutions(question_dirs: list[Path],
 
     solutions must be either in a solutions file per question directory or in
     a single solutions file.
-    Solution files must be toml or csv files. 
+    Solution files must be toml or csv files.
     Nested tables can be selected using the selector.
     """
     solutions = {}
