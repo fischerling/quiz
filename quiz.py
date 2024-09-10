@@ -245,7 +245,7 @@ def main():
     # Sort the questions acording to the loaded solutions
     if args.sort == 'solutions':
         sorted_questions = []
-        for s in solutions.keys():
+        for s in solutions:
             key = Path(s).stem
             for q in questions:
                 if q.stem == key:
