@@ -20,6 +20,7 @@ import random
 import platform
 import os
 import tomllib
+from typing import NoReturn
 import subprocess
 import sys
 
@@ -36,7 +37,7 @@ SHOW_QUESTION_CMD = 'xdg-open'
 sg.SetOptions(window_location=(0, -200))
 
 
-def err(msg: str, status=1):
+def err(msg: str, status=1) -> NoReturn:
     """Print the error message to stderr and exit with status"""
     print(msg)
     sys.exit(status)
