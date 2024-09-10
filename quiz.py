@@ -217,10 +217,12 @@ def main():
     parser.add_argument('--answers',
                         help='match question files names',
                         nargs='*')
-    parser.add_argument('-nr',
-                        '--no-random',
-                        help='Do not randomize questions',
-                        action='store_true')
+    parser.add_argument('--sort',
+                        default='random',
+                        const='random',
+                        nargs='?',
+                        choices=['random', 'filename', 'solutions'])
+
     args = parser.parse_args()
 
     question_dirs = [Path(p) for p in args.question_dir or ['.']]
@@ -228,7 +230,7 @@ def main():
 
     if args.excludes_file:
         questions = exclude_questions(questions, args.excludes_file)
-    if args.no_random:
+    if args.sort == 'filename':
         questions.sort()
 
     solution_files = []
@@ -239,9 +241,21 @@ def main():
 
     solutions = load_solutions(question_dirs, solution_files, args.select)
 
+    # Sort the questions acording to the loaded solutions
+    if args.sort == 'solutions':
+        sorted_questions = []
+        for s in solutions.keys():
+            key = Path(s).stem
+            for q in questions:
+                if q.stem == key:
+                    sorted_questions.append(q)
+                    continue
+
+        questions = sorted_questions
+
     solved = []
     while questions:
-        if args.no_random:
+        if args.sort != 'random':
             next_question = questions[0]
         else:
             next_question = random.choice(questions)
