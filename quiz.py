@@ -19,12 +19,12 @@ from pathlib import Path
 import random
 import platform
 import os
+import tkinter
 import tomllib
 from typing import NoReturn
 import subprocess
 import sys
 
-import PySimpleGUI as sg
 import psutil
 
 from playsound3 import playsound
@@ -33,8 +33,6 @@ WRONG_SOUND = Path(__file__).parent / 'Wrong.mp3'
 CORRECT_SOUND = Path(__file__).parent / 'Correct.mp3'
 
 SHOW_QUESTION_CMD = 'xdg-open'
-
-sg.SetOptions(window_location=(0, -200))
 
 
 def err(msg: str, status=1) -> NoReturn:
@@ -159,12 +157,23 @@ def show_question(question: Path):
     subprocess.Popen(cmd)
 
 
-def color_button(layout, text: str, color: str):
-    """Colorize the button containing the text"""
-    for button in layout:
-        if button.get_text() == text:
-            button.update(button_color=color)
-            break
+def gen_button_onclick(root, button, solution):
+    """Create a button's onclick method"""
+
+    if button["text"] == solution:
+
+        def onclick():
+            button["bg"] = '#00FF00'
+            playsound(str(CORRECT_SOUND))
+            for c in button.master.children.values():
+                c["command"] = root.destroy
+    else:
+
+        def onclick():
+            button["bg"] = '#FF0000'
+            playsound(str(WRONG_SOUND))
+
+    return onclick
 
 
 def prompt_solution(solution: str, prompts=None):
@@ -172,29 +181,14 @@ def prompt_solution(solution: str, prompts=None):
     if prompts is None:
         prompts = ['A', 'B', 'C', 'D', 'E']
 
-    layout = [[sg.Button(c) for c in prompts]]
-    window = sg.Window('', layout)
-
-    # Event Loop to process "events" and get the "values" of the inputs
-    while True:
-        try:
-            event, _ = window.read()
-        except KeyboardInterrupt:
-            sys.exit(0)
-
-        if event == sg.WIN_CLOSED:  # if user closes window or clicks cancel
-            break
-        if event == solution:
-            break
-
-        color_button(layout[0], event, '#FF0000')
-        playsound(str(WRONG_SOUND))
-
-    color_button(layout[0], event, '#00FF00')
-    playsound(str(CORRECT_SOUND))
-
-    window.read()
-    window.close()
+    root = tkinter.Tk()
+    for i, c in enumerate(prompts):
+        btn = tkinter.Button(text=c)
+        btn["command"] = gen_button_onclick(root, btn, solution)
+        btn.grid(column=i, row=0)
+    root.title('')
+    root.attributes('-type', 'dialog')
+    root.mainloop()
 
 
 def main():
