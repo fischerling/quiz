@@ -1,4 +1,4 @@
-image: "muhq/python-dev:3.12.0"
+image: "muhq/python-dev:3.13.0"
 
 before_script:
   - python --version
